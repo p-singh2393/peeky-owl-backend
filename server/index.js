@@ -25,6 +25,7 @@ app.use(helmet());
 const defaultAllowedOrigins = [
   'https://peekyowl.com',
   'https://www.peekyowl.com',
+  'httpa://back.peekyowl.com/api',
   'http://localhost:3000',
 ];
 
