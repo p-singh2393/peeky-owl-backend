@@ -1,0 +1,25 @@
+{
+  "name": "peeky-owl-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Peeky Owl — Express API server",
+  "scripts": {
+    "dev": "node server/index.js",
+    "start": "NODE_ENV=production node server/index.js",
+    "seed": "node server/scripts/seedProducts.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.6.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}
