@@ -22,12 +22,21 @@ const port = Number(process.env.PORT || 5050);
 app.use(helmet());
 
 // ── CORS ─────────────────────────────────────────────────────────────────────
-const allowedOrigins = (process.env.CLIENT_URL || '')
-  .split(',')
-  .map(o => o.trim())
-  .filter(Boolean);
+const defaultAllowedOrigins = [
+  'https://peekyowl.com',
+  'https://www.peekyowl.com',
+  'http://localhost:3000',
+];
 
-app.use(cors({
+const allowedOrigins = [
+  ...defaultAllowedOrigins,
+  ...(process.env.CLIENT_URL || '')
+    .split(',')
+    .map(o => o.trim())
+    .filter(Boolean),
+];
+
+const corsOptions = {
   origin(origin, callback) {
     // Allow server-to-server / Postman (no origin header)
     if (!origin) return callback(null, true);
@@ -35,7 +44,13 @@ app.use(cors({
     return callback(new Error(`CORS origin not allowed: ${origin}`));
   },
   credentials: true,
-}));
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // ── Body parsing ─────────────────────────────────────────────────────────────
 app.use(express.json({ limit: '1mb' }));
